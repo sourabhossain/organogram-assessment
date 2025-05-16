@@ -9,10 +9,10 @@ export class AuditLog extends CommonEntity {
     @JoinColumn({ name: 'user_id' })
     user: UserEntity | null;
 
-    @Column({ length: 100 })
+    @Column({ type: 'varchar', length: 100 })
     action: string;
 
-    @Column({ length: 50, nullable: true })
+    @Column({ type: 'varchar', length: 50, nullable: true })
     target_type: string | null;
 
     @Column({ type: 'int', nullable: true })
