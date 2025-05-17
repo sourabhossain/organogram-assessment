@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -19,19 +19,19 @@ import { RefreshTokenEntity } from './common/entities/refresh-token.entity';
             isGlobal: true
         }),
 
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: process.env.DB_HOST,
-            port: Number(process.env.DB_PORT),
-            username: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
-            autoLoadEntities: true,
-            synchronize: process.env.SYNCHRONIZE === 'true',
-            entities: [UserEntity, RoleEntity, PositionEntity, EmployeeEntity, RefreshTokenEntity, AuditLog],
-            extra: {
-                charset: 'utf8_general_ci'
-            }
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (cfg: ConfigService) => ({
+                type: cfg.get<'mysql'>('DB_TYPE'),
+                host: cfg.get<string>('DB_HOST'),
+                port: cfg.get<number>('DB_PORT'),
+                username: cfg.get<string>('DB_USER'),
+                password: cfg.get<string>('DB_PASS'),
+                database: cfg.get<string>('DB_NAME'),
+                entities: [UserEntity, RoleEntity, PositionEntity, EmployeeEntity, RefreshTokenEntity, AuditLog],
+                synchronize: cfg.get<string>('NODE_ENV') !== 'production'
+            })
         }),
         AuthModule,
         EmployeeModule,
