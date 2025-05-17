@@ -1,411 +1,199 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Organogram Admin Panel</title>
 
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Organogram Admin Panel</title>
+
+    <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline';
-    script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline';
-  "
-        />
+    script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline';" />
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-        <!-- Optional: external CSS -->
-        <link href="/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="container py-4">
-            <!-- LOGIN -->
-            <div id="login-section" class="mx-auto max-w-480">
-                <h2 class="mb-4 text-center">Organogram Admin Panel - Login</h2>
-                <form id="login-form" class="row g-3">
-                    <div class="col-12">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" id="username" class="form-control" autocomplete="username" required />
-                    </div>
-                    <div class="col-12">
-                        <label for="password" class="form-label">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            class="form-control"
-                            autocomplete="current-password"
-                            required
-                        />
-                    </div>
-                    <div class="col-12 d-grid">
-                        <button class="btn btn-primary btn-lg">Login</button>
-                    </div>
-                </form>
-            </div>
+    <!-- Optional: external CSS -->
+    <link href="./css/style.css" rel="stylesheet" />
+</head>
 
-            <!-- MAIN APP -->
-            <div id="app-section" class="d-none">
-                <button
-                    id="logoutBtn"
-                    class="btn btn-outline-danger btn-sm position-fixed top-0 end-0 m-3 z-index-1050"
-                >
-                    Logout
-                </button>
+<body>
+    <div class="container py-4">
+        <!-- LOGIN -->
+        <div id="login-section" class="mx-auto max-w-480">
+            <h2 class="mb-4 text-center">Organogram Admin Panel - Login</h2>
+            <form id="login-form" class="row g-3">
+                <div class="col-12">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-control" autocomplete="username" required />
+                </div>
 
-                <h2 class="mb-4">Organogram Admin Panel</h2>
-                <ul class="nav nav-tabs mb-3" id="mainTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link active"
-                            id="positions-tab-btn"
-                            data-bs-toggle="tab"
-                            data-bs-target="#positions-tab"
-                            type="button"
-                            role="tab"
-                            aria-controls="positions-tab"
-                            aria-selected="true"
-                        >
-                            Positions
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link"
-                            id="employees-tab-btn"
-                            data-bs-toggle="tab"
-                            data-bs-target="#employees-tab"
-                            type="button"
-                            role="tab"
-                            aria-controls="employees-tab"
-                            aria-selected="false"
-                        >
-                            Employees
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button
-                            class="nav-link"
-                            id="subordinates-tab-btn"
-                            data-bs-toggle="tab"
-                            data-bs-target="#subordinates-tab"
-                            type="button"
-                            role="tab"
-                            aria-controls="subordinates-tab"
-                            aria-selected="false"
-                        >
-                            Subordinates
-                        </button>
-                    </li>
-                </ul>
+                <div class="col-12">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" autocomplete="current-password"
+                        required />
+                </div>
 
-                <div class="tab-content bg-white p-3 rounded shadow-sm">
-                    <!-- Positions Tab -->
-                    <div
-                        class="tab-pane fade show active"
-                        id="positions-tab"
-                        role="tabpanel"
-                        aria-labelledby="positions-tab-btn"
-                    >
-                        <h4>Create Position</h4>
-                        <form id="position-form" class="row g-3 mb-4">
-                            <div class="col-md-6">
-                                <label for="posName" class="form-label">Name</label>
-                                <input type="text" id="posName" class="form-control" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label for="posParent" class="form-label">Parent ID (optional)</label>
-                                <input type="number" id="posParent" class="form-control" min="1" />
-                            </div>
-                            <div class="col-12 d-grid">
-                                <button class="btn btn-success btn-lg">Create Position</button>
-                            </div>
-                        </form>
+                <div class="col-12 d-grid">
+                    <button class="btn btn-primary btn-lg">Login</button>
+                </div>
+            </form>
+        </div>
 
-                        <h5>All Positions</h5>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-sm" id="positions-table">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Parent ID</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+        <!-- MAIN APP -->
+        <div id="app-section" class="d-none">
+            <button id="logoutBtn" class="btn btn-outline-danger btn-sm position-fixed top-0 end-0 m-3 z-index-1050">
+                Logout
+            </button>
+
+            <h2 class="mb-4">Organogram Admin Panel</h2>
+            <ul class="nav nav-tabs mb-3" id="mainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="positions-tab-btn" data-bs-toggle="tab"
+                        data-bs-target="#positions-tab" type="button" role="tab" aria-controls="positions-tab"
+                        aria-selected="true">
+                        Positions
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="employees-tab-btn" data-bs-toggle="tab" data-bs-target="#employees-tab"
+                        type="button" role="tab" aria-controls="employees-tab" aria-selected="false">
+                        Employees
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="subordinates-tab-btn" data-bs-toggle="tab"
+                        data-bs-target="#subordinates-tab" type="button" role="tab" aria-controls="subordinates-tab"
+                        aria-selected="false">
+                        Subordinates
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content bg-white p-3 rounded shadow-sm">
+                <!-- Positions Tab -->
+                <div class="tab-pane fade show active" id="positions-tab" role="tabpanel"
+                    aria-labelledby="positions-tab-btn">
+                    <h4>Create Position</h4>
+                    <form id="position-form" class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="posName" class="form-label">Name</label>
+                            <input type="text" id="posName" class="form-control" required />
                         </div>
-                    </div>
 
-                    <!-- Employees Tab -->
-                    <div class="tab-pane fade" id="employees-tab" role="tabpanel" aria-labelledby="employees-tab-btn">
-                        <h4>Create Employee</h4>
-                        <form id="employee-form" class="row g-3 mb-4">
-                            <div class="col-md-4">
-                                <label for="empName" class="form-label">Full Name</label>
-                                <input type="text" id="empName" class="form-control" required />
-                            </div>
-                            <div class="col-md-2">
-                                <label for="empPosId" class="form-label">Position ID</label>
-                                <input type="number" id="empPosId" class="form-control" min="1" required />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="empEmail" class="form-label">Email</label>
-                                <input type="email" id="empEmail" class="form-control" required />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="empPhone" class="form-label">Phone</label>
-                                <input type="text" id="empPhone" class="form-control" />
-                            </div>
-                            <div class="col-12 d-grid">
-                                <button class="btn btn-success btn-lg">Create Employee</button>
-                            </div>
-                        </form>
-
-                        <h5>All Employees</h5>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-sm" id="employees-table">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Position ID</th>
-                                        <th>Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                        <div class="col-md-6">
+                            <label for="posParent" class="form-label">Parent ID (optional)</label>
+                            <input type="number" id="posParent" class="form-control" min="1" />
                         </div>
-                    </div>
 
-                    <!-- Subordinates Tab -->
-                    <div
-                        class="tab-pane fade"
-                        id="subordinates-tab"
-                        role="tabpanel"
-                        aria-labelledby="subordinates-tab-btn"
-                    >
-                        <h4>View Subordinates</h4>
-                        <form id="sub-form" class="row g-3 mb-3">
-                            <div class="col-md-4">
-                                <label for="subPosId" class="form-label">Position ID</label>
-                                <input type="number" id="subPosId" class="form-control" min="1" required />
-                            </div>
-                            <div class="col-12 d-grid">
-                                <button class="btn btn-primary btn-lg">Fetch Employees</button>
-                            </div>
-                        </form>
-
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-sm" id="sub-table">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                        <div class="col-12 d-grid">
+                            <button class="btn btn-success btn-lg">Create Position</button>
                         </div>
+                    </form>
+
+                    <h5>All Positions</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-sm" id="positions-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Parent ID</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Employees Tab -->
+                <div class="tab-pane fade" id="employees-tab" role="tabpanel" aria-labelledby="employees-tab-btn">
+                    <h4>Create Employee</h4>
+                    <form id="employee-form" class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label for="empName" class="form-label">Full Name</label>
+                            <input type="text" id="empName" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="empPosId" class="form-label">Position ID</label>
+                            <input type="number" id="empPosId" class="form-control" min="1" required />
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="empEmail" class="form-label">Email</label>
+                            <input type="email" id="empEmail" class="form-control" required />
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="empPhone" class="form-label">Phone</label>
+                            <input type="text" id="empPhone" class="form-control" />
+                        </div>
+
+                        <div class="col-12 d-grid">
+                            <button class="btn btn-success btn-lg">Create Employee</button>
+                        </div>
+                    </form>
+
+                    <h5>All Employees</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-sm" id="employees-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Position ID</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Subordinates Tab -->
+                <div class="tab-pane fade" id="subordinates-tab" role="tabpanel" aria-labelledby="subordinates-tab-btn">
+                    <h4>View Subordinates</h4>
+                    <form id="sub-form" class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label for="subPosId" class="form-label">Position ID</label>
+                            <input type="number" id="subPosId" class="form-control" min="1" required />
+                        </div>
+
+                        <div class="col-12 d-grid">
+                            <button class="btn btn-primary btn-lg">Fetch Employees</button>
+                        </div>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-sm" id="sub-table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                </tr>
+                            </thead>
+
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Alert container -->
-        <div
-            id="alert-container"
-            aria-live="polite"
-            aria-atomic="true"
-            class="position-fixed top-0 end-0 p-3"
-            style="z-index: 1060; max-width: 320px"
-        ></div>
+    <!-- Alert container -->
+    <div id="alert-container" aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3"
+        style="z-index: 1060; max-width: 320px"></div>
 
-        <script>
-            const apiBase = 'http://localhost:8000';
+    <script src="./js/script.js"></script>
 
-            function authHeader() {
-                return { Authorization: 'Bearer ' + localStorage.getItem('token') };
-            }
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-            function showAlert(message, type = 'danger', timeout = 5000) {
-                const alertContainer = document.getElementById('alert-container');
-                const alertId = 'alert-' + Date.now();
-                const wrapper = document.createElement('div');
-                wrapper.id = alertId;
-                wrapper.className = `alert alert-${type} alert-dismissible fade show`;
-                wrapper.role = 'alert';
-                wrapper.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      `;
-                alertContainer.appendChild(wrapper);
-                setTimeout(() => {
-                    const alertEl = document.getElementById(alertId);
-                    if (alertEl) {
-                        alertEl.classList.remove('show');
-                        alertEl.classList.add('hide');
-                        setTimeout(() => alertEl.remove(), 300);
-                    }
-                }, timeout);
-            }
-
-            // LOGIN
-            document.getElementById('login-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const u = document.getElementById('username').value.trim();
-                const p = document.getElementById('password').value;
-
-                try {
-                    const res = await fetch(apiBase + '/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: u, password: p })
-                    });
-                    if (!res.ok) {
-                        const errData = await res.json().catch(() => ({}));
-                        const msg = errData.message || `Login failed: ${res.status}`;
-                        throw new Error(Array.isArray(msg) ? msg.join(', ') : msg);
-                    }
-                    const { accessToken } = await res.json();
-                    localStorage.setItem('token', accessToken);
-                    document.getElementById('login-section').classList.add('d-none');
-                    document.getElementById('app-section').classList.remove('d-none');
-                    loadPositions();
-                    loadEmployees();
-                } catch (err) {
-                    showAlert(err.message, 'danger');
-                }
-            });
-
-            // LOGOUT (no reload)
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                localStorage.removeItem('token');
-                document.getElementById('app-section').classList.add('d-none');
-                document.getElementById('login-section').classList.remove('d-none');
-                showAlert('Logged out successfully', 'success');
-            });
-
-            // LOAD POSITIONS
-            async function loadPositions() {
-                try {
-                    const res = await fetch(apiBase + '/positions', { headers: authHeader() });
-                    if (!res.ok) throw new Error('Failed to load positions');
-                    const data = await res.json();
-                    const tbody = document.querySelector('#positions-table tbody');
-                    tbody.innerHTML = data
-                        .map((p) => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.parent?.id || ''}</td></tr>`)
-                        .join('');
-                } catch (err) {
-                    showAlert(err.message);
-                }
-            }
-
-            // CREATE POSITION
-            document.getElementById('position-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const name = document.getElementById('posName').value.trim();
-                const parentVal = document.getElementById('posParent').value;
-                const parent_id = parentVal ? Number(parentVal) : undefined;
-
-                try {
-                    const res = await fetch(apiBase + '/positions', {
-                        method: 'POST',
-                        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, parent_id })
-                    });
-                    if (!res.ok) {
-                        const errData = await res.json().catch(() => ({}));
-                        const msg = errData.message || `Failed to create position: ${res.status}`;
-                        throw new Error(Array.isArray(msg) ? msg.join(', ') : msg);
-                    }
-                    showAlert('Position created successfully', 'success');
-                    e.target.reset();
-                    loadPositions();
-                } catch (err) {
-                    showAlert(err.message, 'danger');
-                }
-            });
-
-            // LOAD EMPLOYEES
-            async function loadEmployees() {
-                try {
-                    const res = await fetch(apiBase + '/employees', { headers: authHeader() });
-                    if (!res.ok) throw new Error('Failed to load employees');
-                    const data = await res.json();
-                    const tbody = document.querySelector('#employees-table tbody');
-                    tbody.innerHTML = data
-                        .map(
-                            (e) =>
-                                `<tr><td>${e.id}</td><td>${e.full_name}</td><td>${e.position?.id || ''}</td><td>${e.email}</td></tr>`
-                        )
-                        .join('');
-                } catch (err) {
-                    showAlert(err.message);
-                }
-            }
-
-            // CREATE EMPLOYEE
-            document.getElementById('employee-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const body = {
-                    full_name: document.getElementById('empName').value.trim(),
-                    position_id: +document.getElementById('empPosId').value,
-                    email: document.getElementById('empEmail').value.trim(),
-                    phone: document.getElementById('empPhone').value.trim() || undefined,
-                    hired_date: new Date().toISOString().slice(0, 10)
-                };
-
-                try {
-                    const res = await fetch(apiBase + '/employees', {
-                        method: 'POST',
-                        headers: { ...authHeader(), 'Content-Type': 'application/json' },
-                        body: JSON.stringify(body)
-                    });
-                    if (!res.ok) {
-                        const errData = await res.json().catch(() => ({}));
-                        const msg = errData.message || `Failed to create employee: ${res.status}`;
-                        throw new Error(Array.isArray(msg) ? msg.join(', ') : msg);
-                    }
-                    showAlert('Employee created successfully', 'success');
-                    e.target.reset();
-                    loadEmployees();
-                } catch (err) {
-                    showAlert(err.message, 'danger');
-                }
-            });
-
-            // FETCH SUBORDINATES
-            document.getElementById('sub-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const id = +document.getElementById('subPosId').value;
-                try {
-                    const res = await fetch(`${apiBase}/positions/${id}/employees`, {
-                        headers: authHeader()
-                    });
-                    if (!res.ok) {
-                        const errData = await res.json().catch(() => ({}));
-                        const msg = errData.message || `Failed to fetch employees: ${res.status}`;
-                        throw new Error(Array.isArray(msg) ? msg.join(', ') : msg);
-                    }
-                    const data = await res.json();
-                    const tbody = document.querySelector('#sub-table tbody');
-                    tbody.innerHTML = data
-                        .map(
-                            (e) =>
-                                `<tr><td>${e.id}</td><td>${e.full_name}</td><td>${e.email}</td><td>${e.phone || ''}</td></tr>`
-                        )
-                        .join('');
-                } catch (err) {
-                    showAlert(err.message, 'danger');
-                }
-            });
-        </script>
-
-        <!-- Bootstrap Bundle JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
 </html>
