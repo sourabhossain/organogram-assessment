@@ -1,21 +1,25 @@
-import { Controller, Get, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiParam, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/common/guard/jwt-auth.guard';
 import { EmployeeService } from './employee.service';
-import { EmployeeResponseDto } from './dto/employee-response.dto';
+import { CreateEmployeeDto } from './dto/create-employee.dto';
 
-@ApiTags('positions')
+@ApiTags('employees')
 @ApiBearerAuth()
-@Controller('positions')
+@Controller('employees')
 @UseGuards(JwtAuthGuard)
-export class EmployeeController {
+export class EmployeesController {
     constructor(private readonly employeeService: EmployeeService) {}
 
-    @Get(':id/employees')
-    @ApiOperation({ summary: 'Get all employees under a position (recursive)' })
-    @ApiParam({ name: 'id', description: 'Position ID', type: Number })
-    @ApiOkResponse({ type: [EmployeeResponseDto] })
-    async getEmployees(@Param('id', ParseIntPipe) id: number): Promise<EmployeeResponseDto[]> {
-        return this.employeeService.getEmployeesUnderPosition(id);
+    @Get()
+    @ApiOperation({ summary: 'Get all employees' })
+    getAllEmployees() {
+        return this.employeeService.getAllEmployees();
+    }
+
+    @Post()
+    @ApiOperation({ summary: 'Create a new employee' })
+    createEmployee(@Body() dto: CreateEmployeeDto) {
+        return this.employeeService.createEmployee(dto);
     }
 }

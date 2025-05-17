@@ -1,0 +1,71 @@
+/* styles.css */
+
+/* Center login container and limit width */
+#login-section {
+    max-width: 480px;
+    margin: 2rem auto;
+}
+
+/* Fix logout button position and style */
+#logoutBtn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1050;
+}
+
+/* Alert container fixed top-right */
+#alert-container {
+    position: fixed;
+    top: 5rem;
+    right: 1rem;
+    width: 320px;
+    z-index: 1060;
+}
+
+/* White background with padding & subtle shadow for tab content */
+.tab-content {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Tables: align vertically and enable horizontal scroll on small devices */
+table th,
+table td {
+    vertical-align: middle !important;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Forms: ensure buttons are full width on smaller screens */
+@media (max-width: 576px) {
+    form .btn {
+        width: 100%;
+    }
+}
+
+/* Margin adjustments */
+h4 {
+    margin-bottom: 1rem;
+}
+
+h5 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Optional: Customize alert close button spacing */
+.alert .btn-close {
+    margin-left: 1rem;
+}
+
+/* Inputs spacing */
+input.form-control {
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}

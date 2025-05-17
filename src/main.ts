@@ -6,17 +6,41 @@ import { join } from 'path';
 import { json } from 'express';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
+import * as express from 'express';
 
 async function bootstrap() {
     const host = process.env.HOST ?? 'localhost';
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 8000;
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-    app.use(helmet());
-    app.useStaticAssets(join(__dirname, '..', 'public'));
     app.enableCors();
-    app.use(json({ limit: '2mb' }));
 
+    app.use(
+        '/styles.css',
+        express.static(join(__dirname, '..', 'public', 'styles.css'), {
+            setHeaders: (res) => {
+                res.setHeader('Content-Type', 'text/css');
+            }
+        })
+    );
+
+    app.useStaticAssets(join(__dirname, '..', 'public'));
+
+    app.use(
+        helmet({
+            contentSecurityPolicy: {
+                directives: {
+                    defaultSrc: ["'self'"],
+                    scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+                    styleSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+                    imgSrc: ["'self'", 'data:'],
+                    connectSrc: ["'self'"]
+                }
+            }
+        })
+    );
+
+    app.use(json({ limit: '2mb' }));
     const config = new DocumentBuilder()
         .setTitle('Organogram API')
         .setDescription('API docs for organogram system')
@@ -40,11 +64,8 @@ async function bootstrap() {
     Logger.log(`Server is Running(🔥) on http://${host}:${port}/`, 'City Group');
     Logger.log(`Swagger API Collection(🔥) on http://${host}:${port}/api-doc/`, 'City Group');
 }
-bootstrap().catch((error: unknown) => {
-    if (error instanceof Error) {
-        console.error('Application failed to start:', error.message);
-        console.error(error.stack);
-    } else {
-        console.error('Application failed to start:', error);
-    }
+
+bootstrap().catch((err) => {
+    console.error('Bootstrap error:', err);
+    process.exit(1);
 });
