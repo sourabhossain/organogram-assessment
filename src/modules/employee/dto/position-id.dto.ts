@@ -1,9 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, Min } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class PositionIdDto {
-    @ApiProperty({ description: 'Position ID', example: 1 })
-    @IsInt()
-    @Min(1)
+    @ApiProperty({ description: 'Position ID', example: 1, type: Number })
+    @IsNumber()
     id: number;
 }

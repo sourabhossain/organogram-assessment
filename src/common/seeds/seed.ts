@@ -1,7 +1,6 @@
-// src/common/seeds/seed.ts
-
+import 'tsconfig-paths/register';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../../app.module'; // ← relative import
+import { AppModule } from '../../app.module';
 import { DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { RoleEntity } from '../entities/role.entity';
@@ -10,17 +9,15 @@ import { PositionEntity } from '../entities/position.entity';
 import { EmployeeEntity } from '../entities/employee.entity';
 
 async function runSeed() {
-    // Boot up the Nest context so we can get the DataSource
     const app = await NestFactory.createApplicationContext(AppModule);
     const ds = app.get(DataSource);
 
-    // Repositories
     const roleRepo = ds.getRepository(RoleEntity);
     const userRepo = ds.getRepository(UserEntity);
     const posRepo = ds.getRepository(PositionEntity);
     const empRepo = ds.getRepository(EmployeeEntity);
 
-    // 1) Seed Roles
+    // 1) Roles
     const roles = ['Admin', 'Manager', 'User'].map((name) =>
         roleRepo.create({
             name,
@@ -34,12 +31,12 @@ async function runSeed() {
     );
     await roleRepo.save(roles);
 
-    // 2) Seed Positions (hierarchy)
+    // 2) Positions
     const cto = await posRepo.save(posRepo.create({ name: 'CTO' }));
     const senior = await posRepo.save(posRepo.create({ name: 'Senior Software Eng', parent: cto }));
     const eng = await posRepo.save(posRepo.create({ name: 'Software Eng', parent: senior }));
 
-    // 3) Seed Employees
+    // 3) Employees
     const alice = empRepo.create({
         full_name: 'Alice Manager',
         position: senior,
@@ -56,7 +53,7 @@ async function runSeed() {
     });
     await empRepo.save([alice, bob]);
 
-    // 4) Seed Users (1:1 with employees)
+    // 4) Users
     const passHash = await bcrypt.hash('password123', 10);
     const uAlice = userRepo.create({
         employee: alice,
@@ -72,10 +69,9 @@ async function runSeed() {
     });
     await userRepo.save([uAlice, uBob]);
 
-    // 5) Assign Roles to Users
-    // Alice → Admin + Manager, Bob → User
-    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(uAlice).add([roles[0].id, roles[1].id]);
-    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(uBob).add(roles[2].id);
+    // 5) Assign Roles
+    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(uAlice).add([roles[0].id, roles[1].id]); // Admin, Manager
+    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(uBob).add(roles[2].id); // User
 
     console.log('✅ Seeding complete');
     await app.close();
