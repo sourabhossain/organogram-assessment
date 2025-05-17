@@ -16,20 +16,27 @@ export class EmployeeService {
 
     async getEmployeesUnderPosition(positionId: number): Promise<EmployeeEntity[]> {
         const position = await this.positionRepo.findOneBy({ id: positionId });
-        if (!position) throw new NotFoundException('Position not found');
 
-        const query = `
-      WITH RECURSIVE descendants AS (
-        SELECT id FROM position WHERE id = $1
-        UNION ALL
-        SELECT p.id FROM position p
-        INNER JOIN descendants d ON p.parent_id = d.id
-      )
-      SELECT e.* FROM employee e
-      WHERE e.position_id IN (SELECT id FROM descendants)
-    `;
+        if (!position) {
+            throw new NotFoundException(`Position with id ${positionId} not found`);
+        }
 
-        const employees = await this.employeeRepo.query(query, [positionId]);
-        return employees;
+        const raw = await this.employeeRepo.query(
+            `
+    WITH RECURSIVE descendants AS (
+      SELECT id FROM \`position\` WHERE id = ?
+      UNION ALL
+      SELECT p.id
+      FROM \`position\` p
+      INNER JOIN descendants d ON p.parent_id = d.id
+    )
+    SELECT e.*
+    FROM \`employee\` e
+    WHERE e.position_id IN (SELECT id FROM descendants)
+    `,
+            [positionId]
+        );
+
+        return raw as EmployeeEntity[];
     }
 }

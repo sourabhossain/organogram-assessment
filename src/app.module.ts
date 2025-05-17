@@ -6,6 +6,12 @@ import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { EmployeeModule } from './modules/employee/employee.module';
 import { UsersModule } from './modules/users/users.module';
+import { UserEntity } from './common/entities/user.entity';
+import { RoleEntity } from './common/entities/role.entity';
+import { PositionEntity } from './common/entities/position.entity';
+import { EmployeeEntity } from './common/entities/employee.entity';
+import { AuditLog } from './common/entities/audit-log.entity';
+import { RefreshTokenEntity } from './common/entities/refresh-token.entity';
 
 @Module({
     imports: [
@@ -22,7 +28,7 @@ import { UsersModule } from './modules/users/users.module';
             database: process.env.DB_NAME,
             autoLoadEntities: true,
             synchronize: process.env.SYNCHRONIZE === 'true',
-            entities: ['dist/**/*.entity.js'],
+            entities: [UserEntity, RoleEntity, PositionEntity, EmployeeEntity, RefreshTokenEntity, AuditLog],
             extra: {
                 charset: 'utf8_general_ci'
             }

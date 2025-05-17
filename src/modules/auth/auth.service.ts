@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { UsersService } from '../users/users.service';
 import { JWT_EXPIRES_IN, JWT_SECRET } from 'src/common/configs/config';
 import { UserEntity } from 'src/common/entities/user.entity';
