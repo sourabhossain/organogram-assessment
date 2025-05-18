@@ -43,7 +43,7 @@ Organogram Management System is a full-stack application for managing company ro
 1. Clone the repository
 
 ```bash
-git clone https://github.com/sourabhossain/organogram-assessment.git
+git clone git@github.com:sourabhossain/organogram-assessment.git
 cd organogram-assessment
 ```
 
