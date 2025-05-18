@@ -1,98 +1,168 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Organogram Management System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Organogram Management System is a full-stack application for managing company roles and employees in a hierarchical structure. It features a NestJS backend with MySQL, JWT authentication, and a Bootstrap-based admin panel.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Table of Contents
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Features](#features)  
+- [Prerequisites](#prerequisites)  
+- [Installation](#installation)  
+- [Configuration](#configuration)  
+- [Running the Project](#running-the-project)  
+- [Database Seeding](#database-seeding)  
+- [API Documentation](#api-documentation)  
+- [API Overview](#api-overview)  
+- [Frontend Usage](#frontend-usage)  
 
-## Project setup
+---
 
-```bash
-$ yarn install
-```
+## Features
 
-## Compile and run the project
+- Manage Positions with parent-child relationships (organogram tree)  
+- Manage Employees linked to Positions  
+- Retrieve employees recursively under any position  
+- JWT Authentication and Authorization  
+- OpenAPI (Swagger) docs available at `/api-docs`  
+- Bootstrap UI for admin management  
 
-```bash
-# development
-$ yarn run start
+---
 
-# watch mode
-$ yarn run start:dev
+## Prerequisites
 
-# production mode
-$ yarn run start:prod
-```
+- Node.js >= 22.x  
+- yarn  
+- MySQL  
+- Git  
 
-## Run tests
+---
+
+## Installation
+
+1. Clone the repository
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+git clone https://github.com/sourabhossain/organogram-assessment.git
+cd organogram-assessment
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. Install dependencies
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+yarn install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## Configuration
 
-Check out a few resources that may come in handy when working with NestJS:
+1. Copy `.env.example` to `.env` and update environment variables accordingly:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+<details>
+<summary>.env Configuration</summary>
 
-## Support
+```env
+#############################################
+#           Server Configuration            #
+#############################################
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+HOST=localhost            
+PORT=8000            
 
-## Stay in touch
+#############################################
+#           Database Configuration          #
+#############################################
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+DB_HOST=localhost        
+DB_PORT=3306             
+DB_USERNAME=root         
+DB_PASSWORD=            
+DB_NAME=organogram       
+SYNCHRONIZE=true        
 
-## License
+#############################################
+#           JWT Authentication              #
+#############################################
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+JWT_SECRET=your_super_secret_key
+JWT_EXPIRES_IN=3600s             
+```
+
+</details>
+
+2. Create the database in MySQL:
+
+```bash
+CREATE DATABASE organogram;
+```
+
+---
+
+## Running the Project
+
+Start the development server:
+
+```bash
+yarn start:dev
+```
+
+The backend server will run at:  
+[http://localhost:8000](http://localhost:8000)
+
+---
+
+## Database Seeding
+
+To seed the database with initial roles, positions, employees, and users, run:
+
+```bash
+yarn seed
+```
+
+This creates:
+
+- **Roles**: Admin, Manager, User  
+- **Positions**: CTO > Senior Software Engineer > Software Engineer  
+- **Users**:
+  - `alice` (Roles: Admin, Manager) — password: `password123`  
+  - `bob` (Role: User) — password: `password123`  
+
+---
+
+## API Documentation
+
+Swagger UI is available at:
+
+```
+http://localhost:8000/api-docs/
+```
+
+Use this to explore all API endpoints, try requests, and view schemas.
+
+---
+
+## API Overview
+
+- `POST /auth/login` — Login and receive JWT token  
+  - Include token in headers as:  
+    `Authorization: Bearer <your_token>`  
+- `GET /positions` — List all positions  
+- `POST /positions` — Create a new position  
+- `GET /employees` — List all employees  
+- `POST /employees` — Create a new employee  
+- `GET /positions/:id/employees` — Get all employees under a position recursively  
+
+---
+
+## Frontend Usage
+
+The frontend UI is served as static files under `/public`.
+Open `index.html` in your browser or run a static server pointing to `/public`.
+
+Features:
+- Login form to authenticate
+- Tabs to manage positions, employees, and view subordinates
+- Logout button to clear session
+
+Make sure your backend server is running and accessible at `http://localhost:8000`.
