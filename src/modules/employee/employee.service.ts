@@ -5,6 +5,7 @@ import { PositionEntity } from 'src/common/entities/position.entity';
 import { Repository } from 'typeorm';
 import { CreatePositionDto } from './dto/create-position.dto';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { EmployeeResponseDto } from './dto/employee-response.dto';
 
 @Injectable()
 export class EmployeeService {
@@ -59,29 +60,29 @@ export class EmployeeService {
         return this.employeeRepo.save(employee);
     }
 
-    async getEmployeesUnderPosition(positionId: number): Promise<EmployeeEntity[]> {
+    async getEmployeesUnderPosition(positionId: number): Promise<EmployeeResponseDto[]> {
         const position = await this.positionRepo.findOneBy({ id: positionId });
 
         if (!position) {
             throw new NotFoundException(`Position with id ${positionId} not found`);
         }
 
-        const raw = await this.employeeRepo.query(
+        const raw: EmployeeResponseDto[] = await this.employeeRepo.query<EmployeeResponseDto[]>(
             `
-      WITH RECURSIVE descendants AS (
-        SELECT id FROM \`position\` WHERE id = ?
-        UNION ALL
-        SELECT p.id
-        FROM \`position\` p
-        INNER JOIN descendants d ON p.parent_id = d.id
-      )
-      SELECT e.*
-      FROM \`employee\` e
-      WHERE e.position_id IN (SELECT id FROM descendants)
-      `,
+            WITH RECURSIVE descendants AS (
+                SELECT id FROM \`position\` WHERE id = ?
+                UNION ALL
+                SELECT p.id
+                FROM \`position\` p
+                INNER JOIN descendants d ON p.parent_id = d.id
+            )
+            SELECT e.*
+            FROM \`employee\` e
+            WHERE e.position_id IN (SELECT id FROM descendants)
+            `,
             [positionId]
         );
 
-        return raw as EmployeeEntity[];
+        return raw;
     }
 }

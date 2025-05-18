@@ -54,30 +54,34 @@ async function runSeed() {
     await empRepo.save([alice, bob]);
 
     // 4) Users
-    const passHash = await bcrypt.hash('password123', 10);
-    const uAlice = userRepo.create({
+    const salt = bcrypt.genSaltSync(10);
+    const passHash = bcrypt.hashSync('password123', salt);
+
+    const userAlice = userRepo.create({
         employee: alice,
         username: 'alice',
         password_hash: passHash,
         is_active: true
     });
-    const uBob = userRepo.create({
+
+    const userBob = userRepo.create({
         employee: bob,
         username: 'bob',
         password_hash: passHash,
         is_active: true
     });
-    await userRepo.save([uAlice, uBob]);
+
+    await userRepo.save([userAlice, userBob]);
 
     // 5) Assign Roles
-    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(uAlice).add([roles[0].id, roles[1].id]); // Admin, Manager
-    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(uBob).add(roles[2].id); // User
+    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(userAlice).add([roles[0].id, roles[1].id]); // Admin, Manager
+    await ds.createQueryBuilder().relation(UserEntity, 'roles').of(userBob).add(roles[2].id); // User
 
-    console.log('✅ Seeding complete');
+    console.info('✅ Seeding complete');
     await app.close();
 }
 
-runSeed().catch((err) => {
-    console.error('❌ Seed failed:', err);
+runSeed().catch((error) => {
+    console.error('❌ Seed failed:', error);
     process.exit(1);
 });
