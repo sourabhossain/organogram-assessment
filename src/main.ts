@@ -1,12 +1,12 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { join } from 'path';
-import { json } from 'express';
+import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import helmet from 'helmet';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as express from 'express';
+import { json } from 'express';
+import helmet from 'helmet';
+import { join } from 'path';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
     const host = process.env.HOST ?? 'localhost';
@@ -61,8 +61,8 @@ async function bootstrap() {
 
     await app.listen(port);
 
-    Logger.log(`Server is Running(🔥) on http://${host}:${port}/`, 'City Group');
-    Logger.log(`Swagger API Collection(🔥) on http://${host}:${port}/api-doc/`, 'City Group');
+    Logger.log(`Server is Running(🔥) on http://${host}:${port}/`, 'Organogram');
+    Logger.log(`Swagger API Collection(🔥) on http://${host}:${port}/api-docs/`, 'Organogram');
 }
 
 bootstrap().catch((err) => {

@@ -6,35 +6,35 @@ Organogram Management System is a full-stack application for managing company ro
 
 ## Table of Contents
 
-- [Features](#features)  
-- [Prerequisites](#prerequisites)  
-- [Installation](#installation)  
-- [Configuration](#configuration)  
-- [Running the Project](#running-the-project)  
-- [Database Seeding](#database-seeding)  
-- [API Documentation](#api-documentation)  
-- [API Overview](#api-overview)  
-- [Frontend Usage](#frontend-usage)  
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Project](#running-the-project)
+- [Database Seeding](#database-seeding)
+- [API Documentation](#api-documentation)
+- [API Overview](#api-overview)
+- [Frontend Usage](#frontend-usage)
 
 ---
 
 ## Features
 
-- Manage Positions with parent-child relationships (organogram tree)  
-- Manage Employees linked to Positions  
-- Retrieve employees recursively under any position  
-- JWT Authentication and Authorization  
-- OpenAPI (Swagger) docs available at `/api-docs`  
-- Bootstrap UI for admin management  
+- Manage Positions with parent-child relationships (organogram tree)
+- Manage Employees linked to Positions
+- Retrieve employees recursively under any position
+- JWT Authentication and Authorization
+- OpenAPI (Swagger) docs available at `/api-docs`
+- Bootstrap UI for admin management
 
 ---
 
 ## Prerequisites
 
-- Node.js >= 22.x  
-- yarn  
-- MySQL  
-- Git  
+- Node.js >= 22.x
+- yarn
+- MySQL
+- Git
 
 ---
 
@@ -67,26 +67,26 @@ yarn install
 #           Server Configuration            #
 #############################################
 
-HOST=localhost            
-PORT=8000            
+HOST=localhost
+PORT=8000
 
 #############################################
 #           Database Configuration          #
 #############################################
 
-DB_HOST=localhost        
-DB_PORT=3306             
-DB_USERNAME=root         
-DB_PASSWORD=            
-DB_NAME=organogram       
-SYNCHRONIZE=true        
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=
+DB_NAME=organogram
+SYNCHRONIZE=true
 
 #############################################
 #           JWT Authentication              #
 #############################################
 
 JWT_SECRET=your_super_secret_key
-JWT_EXPIRES_IN=3600s             
+JWT_EXPIRES_IN=3600s
 ```
 
 </details>
@@ -122,11 +122,11 @@ yarn seed
 
 This creates:
 
-- **Roles**: Admin, Manager, User  
-- **Positions**: CTO > Senior Software Engineer > Software Engineer  
+- **Roles**: Admin, Manager, User
+- **Positions**: CTO > Senior Software Engineer > Software Engineer
 - **Users**:
-  - `alice` (Roles: Admin, Manager) — password: `password123`  
-  - `bob` (Role: User) — password: `password123`  
+    - `alice` (Roles: Admin, Manager) — password: `password123`
+    - `bob` (Role: User) — password: `password123`
 
 ---
 
@@ -144,14 +144,14 @@ Use this to explore all API endpoints, try requests, and view schemas.
 
 ## API Overview
 
-- `POST /auth/login` — Login and receive JWT token  
-  - Include token in headers as:  
-    `Authorization: Bearer <your_token>`  
-- `GET /positions` — List all positions  
-- `POST /positions` — Create a new position  
-- `GET /employees` — List all employees  
-- `POST /employees` — Create a new employee  
-- `GET /positions/:id/employees` — Get all employees under a position recursively  
+- `POST /auth/login` — Login and receive JWT token
+    - Include token in headers as:  
+      `Authorization: Bearer <your_token>`
+- `GET /positions` — List all positions
+- `POST /positions` — Create a new position
+- `GET /employees` — List all employees
+- `POST /employees` — Create a new employee
+- `GET /positions/:id/employees` — Get all employees under a position recursively
 
 ---
 
@@ -161,6 +161,7 @@ The frontend UI is served as static files under `/public`.
 Open `index.html` in your browser or run a static server pointing to `/public`.
 
 Features:
+
 - Login form to authenticate
 - Tabs to manage positions, employees, and view subordinates
 - Logout button to clear session

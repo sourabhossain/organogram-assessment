@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, Unique } from 'typeorm';
+import { AuditLog } from './audit-log.entity';
 import { CommonEntity } from './common.entity';
 import { EmployeeEntity } from './employee.entity';
-import { RoleEntity } from './role.entity';
-import { AuditLog } from './audit-log.entity';
 import { RefreshTokenEntity } from './refresh-token.entity';
+import { RoleEntity } from './role.entity';
 
 @Entity('users')
 @Unique(['username'])

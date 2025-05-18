@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiParam, ApiOkResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/common/guard/jwt-auth.guard';
-import { EmployeeService } from './employee.service';
-import { EmployeeResponseDto } from './dto/employee-response.dto';
 import { CreatePositionDto } from './dto/create-position.dto';
+import { EmployeeResponseDto } from './dto/employee-response.dto';
+import { EmployeeService } from './employee.service';
 
 @ApiTags('positions')
 @ApiBearerAuth()

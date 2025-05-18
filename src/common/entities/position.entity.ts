@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { CommonEntity } from './common.entity';
 
 @Entity('position')

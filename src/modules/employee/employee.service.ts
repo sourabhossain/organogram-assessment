@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EmployeeEntity } from 'src/common/entities/employee.entity';
 import { PositionEntity } from 'src/common/entities/position.entity';
 import { Repository } from 'typeorm';
-import { CreatePositionDto } from './dto/create-position.dto';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { CreatePositionDto } from './dto/create-position.dto';
 import { EmployeeResponseDto } from './dto/employee-response.dto';
 
 @Injectable()

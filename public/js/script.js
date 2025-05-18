@@ -8,7 +8,7 @@ function showAlert(message, type = 'danger', timeout = 5000) {
     const alertContainer = document.getElementById('alert-container');
     const alertId = 'alert-' + Date.now();
     const wrapper = document.createElement('div');
-    
+
     wrapper.id = alertId;
     wrapper.className = `alert alert-${type} alert-dismissible fade show`;
     wrapper.role = 'alert';
@@ -16,12 +16,12 @@ function showAlert(message, type = 'danger', timeout = 5000) {
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
-    
+
     alertContainer.appendChild(wrapper);
-    
+
     setTimeout(() => {
         const alertElement = document.getElementById(alertId);
-    
+
         if (alertElement) {
             alertElement.classList.remove('show');
             alertElement.classList.add('hide');
@@ -42,19 +42,19 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: u, password: p })
         });
-        
+
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             const msg = errorData.message || `Login failed: ${response.status}`;
             throw new Error(Array.isArray(msg) ? msg.join(', ') : msg);
         }
-        
+
         const { accessToken } = await response.json();
-        
+
         localStorage.setItem('token', accessToken);
         document.getElementById('login-section').classList.add('d-none');
         document.getElementById('app-section').classList.remove('d-none');
-        
+
         loadPositions();
         loadEmployees();
     } catch (error) {
@@ -74,16 +74,19 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 async function loadPositions() {
     try {
         const response = await fetch(`${apiBase}/positions`, { headers: authHeader() });
-        
+
         if (!response.ok) {
             throw new Error('Failed to load positions');
         }
-        
+
         const data = await response.json();
         const tbody = document.querySelector('#positions-table tbody');
-        
+
         tbody.innerHTML = data
-            .map((position) => `<tr><td>${position.id}</td><td>${position.name}</td><td>${position.parent?.id || ''}</td></tr>`)
+            .map(
+                (position) =>
+                    `<tr><td>${position.id}</td><td>${position.name}</td><td>${position.parent?.id || ''}</td></tr>`
+            )
             .join('');
     } catch (err) {
         showAlert(err.message);
@@ -103,13 +106,13 @@ document.getElementById('position-form').addEventListener('submit', async (eleme
             headers: { ...authHeader(), 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, parent_id })
         });
-        
+
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
             const msg = errorData.message || `Failed to create position: ${response.status}`;
             throw new Error(Array.isArray(msg) ? msg.join(', ') : msg);
         }
-        
+
         showAlert('Position created successfully', 'success');
         element.target.reset();
         loadPositions();
@@ -122,14 +125,14 @@ document.getElementById('position-form').addEventListener('submit', async (eleme
 async function loadEmployees() {
     try {
         const response = await fetch(`${apiBase}/employees`, { headers: authHeader() });
-        
+
         if (!response.ok) {
             throw new Error('Failed to load employees');
         }
-        
+
         const data = await response.json();
         const tbody = document.querySelector('#employees-table tbody');
-        
+
         tbody.innerHTML = data
             .map(
                 (element) =>
@@ -177,7 +180,7 @@ document.getElementById('employee-form').addEventListener('submit', async (eleme
 document.getElementById('sub-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const id = +document.getElementById('subPosId').value;
-    
+
     try {
         const response = await fetch(`${apiBase}/positions/${id}/employees`, {
             headers: authHeader()
@@ -192,7 +195,10 @@ document.getElementById('sub-form').addEventListener('submit', async (e) => {
         const data = await response.json();
         const tbody = document.querySelector('#sub-table tbody');
         tbody.innerHTML = data
-            .map((element) => `<tr><td>${element.id}</td><td>${element.full_name}</td><td>${element.email}</td><td>${element.phone || ''}</td></tr>`)
+            .map(
+                (element) =>
+                    `<tr><td>${element.id}</td><td>${element.full_name}</td><td>${element.email}</td><td>${element.phone || ''}</td></tr>`
+            )
             .join('');
     } catch (error) {
         showAlert(error.message, 'danger');

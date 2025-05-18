@@ -3,15 +3,15 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuditLog } from './common/entities/audit-log.entity';
+import { EmployeeEntity } from './common/entities/employee.entity';
+import { PositionEntity } from './common/entities/position.entity';
+import { RefreshTokenEntity } from './common/entities/refresh-token.entity';
+import { RoleEntity } from './common/entities/role.entity';
+import { UserEntity } from './common/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { EmployeeModule } from './modules/employee/employee.module';
 import { UsersModule } from './modules/users/users.module';
-import { UserEntity } from './common/entities/user.entity';
-import { RoleEntity } from './common/entities/role.entity';
-import { PositionEntity } from './common/entities/position.entity';
-import { EmployeeEntity } from './common/entities/employee.entity';
-import { AuditLog } from './common/entities/audit-log.entity';
-import { RefreshTokenEntity } from './common/entities/refresh-token.entity';
 
 @Module({
     imports: [
